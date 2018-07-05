@@ -1,6 +1,7 @@
 package com.example.rabinovich.lab;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class ChangeActivity extends AppCompatActivity {
     private EditText valueText;
     private TextView resultText;
     final String url = "https://data.magnet.cl/api/v1/currencies/usd/clp/";
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class ChangeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change);
 
         dollarValue = 650;
+        preferences = getSharedPreferences(getString(R.string.shared_preferences_file), MODE_PRIVATE);
         valueText = (EditText) findViewById(R.id.valueText);
         resultText = (TextView) findViewById(R.id.resultText);
     }
@@ -78,6 +81,21 @@ public class ChangeActivity extends AppCompatActivity {
                 resultText.setText(Float.toString(new_value));
             }
         });
+
+        Button logoutButton = (Button) findViewById(R.id.logOutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+            }
+        });
+    }
+
+    private void logOut() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear().commit();
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
     }
 
     private float Convert(int value, int currency){
