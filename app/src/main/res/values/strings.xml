@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">lab</string>
+
+    <string name="shared_preferences_file">sharedPref</string>
+</resources>
